@@ -1,7 +1,7 @@
 {
   "uuid": "091efd6a-cf2b-473e-a61c-f0318edecdbf",
   "plugin_name": "Musique",
-  "plugin_author": "I Read YURIs",
+  "plugin_author": "Rxsalith",
   "plugin_description": "A music player in game that shows what's playing on Windows, with an animated HUD.",
   "plugin_version": "1.0.0",
   "game_version": "1.26.52",
