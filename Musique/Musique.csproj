@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Platforms>x64</Platforms>
+    <LangVersion>14</LangVersion>
+  </PropertyGroup>
+
+	<PropertyGroup>
+		<OnixPluginUUID>091efd6a-cf2b-473e-a61c-f0318edecdbf</OnixPluginUUID>
+	</PropertyGroup>
+
+	<Target Name="BuildSmtcHelper" BeforeTargets="PostBuild">
+		<Exec Command="dotnet build &quot;$(MSBuildProjectDirectory)\..\SmtcHelper\SmtcHelper.csproj&quot; -c $(Configuration) -nologo -v q -o &quot;$(OutDir)smtc&quot;" />
+	</Target>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Delete Files="$(OutDir)OnixRuntime.dll;$(OutDir)OnixRuntime.pdb;$(OutDir)OnixRuntime.xml" />
+        <Copy SourceFiles="$(SolutionDir)README.md" DestinationFolder="$(ProjectDir)Assets" Condition="Exists('$(SolutionDir)README.md')" ContinueOnError="true" />
+		<Exec Condition="'$(ServerPluginBuild)' != 'TRUE'" Command="rmdir /Q /S &quot;$(LOCALAPPDATA)\OnixClient\Client\Plugins\plugins\$(OnixPluginUUID)&quot;" IgnoreExitCode="true" />
+		<Exec Condition="'$(ServerPluginBuild)' != 'TRUE'" Command="xcopy /S /C /I /Y &quot;$(OutDir)&quot; &quot;$(LOCALAPPDATA)\OnixClient\Client\Plugins\plugins\$(OnixPluginUUID)&quot;" />
+		<Exec Condition="'$(ServerPluginBuild)' != 'TRUE'" Command="xcopy /E /C /I /Y &quot;$(ProjectDir)Assets&quot; &quot;$(LOCALAPPDATA)\OnixClient\Client\Plugins\plugins\$(OnixPluginUUID)\assets&quot;" />
+		<Exec Condition="'$(ServerPluginBuild)' != 'TRUE'" Command="xcopy /C /Y &quot;$(ProjectDir)manifest.json&quot; &quot;$(LOCALAPPDATA)\OnixClient\Client\Plugins\plugins\$(OnixPluginUUID)&quot;" />
+		<Exec Condition="'$(ServerPluginBuild)' != 'TRUE'" Command="echo OnixClient > &quot;$(LOCALAPPDATA)\OnixClient\Client\Plugins\plugins\$(OnixPluginUUID)\CompletePluginFlag.txt&quot;" />
+		<Exec Condition="'$(ServerPluginBuild)' == 'TRUE'" Command="echo OnixClient > &quot;$(SolutionDir)BuildSuccessful.txt&quot;" />
+	</Target>
+
+    <ItemGroup>
+        <Reference Condition="'$(ServerPluginBuild)' == 'TRUE'" Include="OnixRuntime"> </Reference>
+        <Reference Condition="'$(ServerPluginBuild)' != 'TRUE'" Include="OnixRuntime">
+        <HintPath>$(LOCALAPPDATA)\OnixClient\Client\Plugins\runtime\OnixRuntime.dll</HintPath>
+        </Reference>
+
+        <Analyzer Condition="'$(ServerPluginBuild)' == 'TRUE'" Include="$(ServerPluginBuildRuntime)/OnixRuntime.CodeGenerators.dll"/>
+        <Analyzer Condition="'$(ServerPluginBuild)' != 'TRUE'" Include="$(LOCALAPPDATA)\OnixClient\Client\Plugins\runtime\OnixRuntime.CodeGenerators.dll"/>
+    </ItemGroup>
+
+    <PropertyGroup Condition="'$(ServerPluginBuild)' == 'TRUE'">
+        <AssemblySearchPaths>$(ServerPluginBuildRuntime);$(AssemblySearchPaths);</AssemblySearchPaths>
+    </PropertyGroup>
+
+	<ItemGroup>
+	  <Folder Include="Assets\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
+	</ItemGroup>
+
+</Project>

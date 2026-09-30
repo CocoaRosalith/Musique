@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Musique", "Musique/Musique.csproj", "{BA1CA498-2904-464A-986B-0E6DA203F240}"
+EndProject
+Global
+    GlobalSection(SolutionConfigurationPlatforms) = preSolution
+        Debug|x64 = Debug|x64
+        Release|x64 = Release|x64
+    EndGlobalSection
+    GlobalSection(ProjectConfigurationPlatforms) = postSolution
+        {BA1CA498-2904-464A-986B-0E6DA203F240}.Debug|x64.ActiveCfg = Debug|x64
+        {BA1CA498-2904-464A-986B-0E6DA203F240}.Debug|x64.Build.0 = Debug|x64
+        {BA1CA498-2904-464A-986B-0E6DA203F240}.Release|x64.ActiveCfg = Release|x64
+        {BA1CA498-2904-464A-986B-0E6DA203F240}.Release|x64.Build.0 = Release|x64
+    EndGlobalSection
+    GlobalSection(SolutionProperties) = preSolution
+        HideSolutionNode = FALSE
+    EndGlobalSection
+    GlobalSection(ExtensibilityGlobals) = postSolution
+        SolutionGuid = {3710CA6E-EF86-46E7-8B14-391B0DC394E7}
+    EndGlobalSection
+EndGlobal
