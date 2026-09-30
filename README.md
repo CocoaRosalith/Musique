@@ -1,7 +1,7 @@
 # Musique
 A music player for Onix Client
 
-- By **I Read YURIs**
+- By **Rxsalith**
 
 ## Support
 For support, questions, or bug reports:
